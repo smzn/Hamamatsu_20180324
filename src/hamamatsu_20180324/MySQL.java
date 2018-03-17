@@ -20,7 +20,7 @@ public class MySQL {
     ResultSet rs;
     private double data[][];
     
-	public MySQL( ) {
+	public MySQL( ) { //データベース接続時
 		this.driver = "org.gjt.mm.mysql.Driver";
         this.server = "naisyo.sist.ac.jp";
         this.dbname = "naisyo";
@@ -28,7 +28,6 @@ public class MySQL {
         this.user = "naisyo";
         this.password = "naisyo";
         this.data = new double[15][6];
-        //this.node_index = node_index;
         try {
             this.con = DriverManager.getConnection(url, user, password);
             this.stmt = con.createStatement ();
@@ -41,6 +40,8 @@ public class MySQL {
             e.printStackTrace();
         }
 	}
+	
+	public MySQL(int flg) {} //csvで取り込む場合
 	
 	public double[][] selectData() {
 		String sql = "SELECT (`age0to4`+`age5to9`+`age10to14`+`age15to19`) as `age0to19`, (`age20to24`+`age25to29`+`age30to34`+`age35to39`) as `age20to39`, (`age40to44`+`age45to49`+`age50to54`+`age55to59`) as `age40to59`, (`age60to64`+`age65to69`+`age70to74`+`age75to79`) as `age60to79`, (`age80to84`+`age85over`) as `age80over`, `house`FROM `populations` order by `total` desc limit 15";

@@ -8,8 +8,8 @@ public class Hamamatsu_main {
 		// TODO Auto-generated method stub
 		double data[][] = new double[15][5];
 		
-		//MySQLから取り込み
-		MySQL mysql = new MySQL();
+		//MySQL mysql = new MySQL(); //データベース接続時
+		MySQL mysql = new MySQL(1); //csv取り込み
 		//data = mysql.selectData();
 		data = mysql.getCSV("csv/hama05.csv", 15, 6);
 		System.out.println("selectData = "+Arrays.deepToString(data));
@@ -24,6 +24,8 @@ public class Hamamatsu_main {
 		System.out.println("Standard Deviation = "+Arrays.toString(std_value));
 		hlib.getBoxplot();
 		hlib.getHistogram();
+		double [][] cor_value = hlib.getCor();
+		System.out.println("Corrlation = "+Arrays.deepToString(cor_value));
 	}
 
 }

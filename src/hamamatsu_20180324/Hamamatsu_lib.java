@@ -69,7 +69,6 @@ public class Hamamatsu_lib {
 	public double[][] getCov() {
 		double[][] var_value = null;
 		try {
-			//ml.putVariableAsync("data", data);
 			ml.putVariableAsync("var_value", var_value);
 			ml.eval("var_value = cov(data);");
 			Future<double[][]> futureEval_var_value = ml.getVariableAsync("var_value");
@@ -102,7 +101,6 @@ public class Hamamatsu_lib {
 	public double[] getStd() {
 		double[] var_value = null;
 		try {
-			//ml.putVariableAsync("data", data);
 			ml.putVariableAsync("var_value", var_value);
 			ml.eval("var_value = std(data);");
 			Future<double[]> futureEval_var_value = ml.getVariableAsync("var_value");
@@ -138,7 +136,7 @@ public class Hamamatsu_lib {
 			ml.eval("xlabel('Generation');");
 			ml.eval("ylabel('Population');");
 			ml.eval("title('Population for generation')");
-			ml.eval("pause(10);");
+			ml.eval("pause(5);");
 			ml.eval("saveas(gcf,'boxplot.png')");
 		} catch (MatlabExecutionException e) {
 			// TODO Auto-generated catch block
@@ -168,7 +166,7 @@ public class Hamamatsu_lib {
 			ml.eval("xlabel('Generation');");
 			ml.eval("ylabel('Population');");
 			ml.eval("title('Population for generation')");
-			ml.eval("pause(10);");
+			ml.eval("pause(5);");
 			ml.eval("saveas(gcf,'histogram.png')");
 		} catch (MatlabExecutionException e) {
 			// TODO Auto-generated catch block
@@ -190,5 +188,37 @@ public class Hamamatsu_lib {
 			e.printStackTrace();
 		}
 	}
+	
+	//https://jp.mathworks.com/help/matlab/ref/corrcoef.html
+	public double[][] getCor() {
+		double[][] var_value = null;
+		try {
+			ml.putVariableAsync("var_value", var_value);
+			ml.eval("var_value = corrcoef(data);");
+			Future<double[][]> futureEval_var_value = ml.getVariableAsync("var_value");
+			var_value = futureEval_var_value.get();
+			
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return var_value;
+	}
+
 	
 }
