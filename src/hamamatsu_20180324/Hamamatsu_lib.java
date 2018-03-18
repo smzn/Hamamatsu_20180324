@@ -220,5 +220,54 @@ public class Hamamatsu_lib {
 		return var_value;
 	}
 
-	
+
+	//coeff = pca(X) は、n 行 p 列のデータ行列 X の主成分係数 (負荷量とも呼ばれます) を返します。X の行は観測値に対応し、列は変数に対応します。
+	//この係数行列は p 行 p 列です。coeff の列ごとに 1 つの主成分の係数が含まれ、これらの列は成分分散の降順で並びます。既定では pca がデータをセンタリングし、特異値分解 (SVD) アルゴリズムを使用します。
+	public double[][] getPCA() {
+		double[][] var_value = null;
+		double[] explained = null;
+		try {
+			ml.putVariableAsync("var_value", var_value);
+			ml.putVariableAsync("explained", explained);
+			ml.eval("[coeff,score,latent,~,explained] = pca(zscore(data));");
+			Future<double[][]> futureEval_var_value = ml.getVariableAsync("coeff");
+			var_value = futureEval_var_value.get();
+			Future<double[]> futureEval_explained = ml.getVariableAsync("explained");
+			explained = futureEval_explained.get();
+			System.out.println("Explained = "+Arrays.toString(explained));
+			ml.eval("biplot(coeff(:,1:2),'scores',score(:,1:2),'varlabels',{'v1','v2','v3','v4','v5','v6'});");
+			ml.eval("xlabel('1st Principal Component');");
+			ml.eval("ylabel('2st Principal Component');");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'biplot.png')");
+			
+			ml.eval("scatter3(score(:,1),score(:,2),score(:,3))");
+			ml.eval("axis equal;");
+			ml.eval("xlabel('1st Principal Component');");
+			ml.eval("ylabel('2st Principal Component');");
+			ml.eval("zlabel('3st Principal Component');");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'scatter3_pca.png')");
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return var_value;
+	}
+
 }
