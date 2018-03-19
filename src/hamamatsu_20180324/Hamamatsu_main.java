@@ -28,6 +28,7 @@ public class Hamamatsu_main {
 		System.out.println("Corrlation = "+Arrays.deepToString(cor_value));
 		double [][] pca_value = hlib.getPCA();
 		System.out.println("PCA = "+Arrays.deepToString(pca_value));
+		hlib.getCluster();
 	}
 
 }

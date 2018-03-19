@@ -269,5 +269,37 @@ public class Hamamatsu_lib {
 		}
 		return var_value;
 	}
+	
+	//https://jp.mathworks.com/help/stats/cluster.html
+	public void getCluster() {
+		try {
+			ml.eval("Z = linkage(data,'ward','euclidean');");
+			ml.eval("dendrogram(Z);");
+			//ml.eval("xlabel('Generation');");
+			//ml.eval("ylabel('Population');");
+			ml.eval("title('Population for generation')");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'cluster.png')");
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 }
