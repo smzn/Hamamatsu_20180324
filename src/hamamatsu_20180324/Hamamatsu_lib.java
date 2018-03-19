@@ -301,5 +301,41 @@ public class Hamamatsu_lib {
 		}
 	}
 
+	public double[] getPerceptronOR() {
+		double[] y = null;
+		try {
+			ml.putVariableAsync("y", y);
+			ml.eval("x = [0 0 1 1; 0 1 0 1];");
+			ml.eval("t = [0 1 1 1];");
+			ml.eval("net = perceptron;");
+			ml.eval("net = train(net,x,t);");
+			ml.eval("view(net);");
+			ml.eval("pause(5);");
+			ml.eval("y = net(x);");
+			Future<double[]> futureEval_y = ml.getVariableAsync("y");
+			y = futureEval_y.get();
+			
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return y;
+
+	}
 
 }

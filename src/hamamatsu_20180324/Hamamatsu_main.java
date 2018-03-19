@@ -29,6 +29,8 @@ public class Hamamatsu_main {
 		double [][] pca_value = hlib.getPCA();
 		System.out.println("PCA = "+Arrays.deepToString(pca_value));
 		hlib.getCluster();
+		double [] perceptron_y = hlib.getPerceptronOR();
+		System.out.println("PerceptronOR = "+Arrays.toString(perceptron_y));
 	}
 
 }
