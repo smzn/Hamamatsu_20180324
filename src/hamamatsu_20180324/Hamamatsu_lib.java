@@ -235,6 +235,10 @@ public class Hamamatsu_lib {
 			Future<double[]> futureEval_explained = ml.getVariableAsync("explained");
 			explained = futureEval_explained.get();
 			System.out.println("Explained = "+Arrays.toString(explained));
+			ml.eval("pareto(explained);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'pareto.png')");
+			
 			ml.eval("biplot(coeff(:,1:2),'scores',score(:,1:2),'varlabels',{'v1','v2','v3','v4','v5','v6'});");
 			ml.eval("xlabel('1st Principal Component');");
 			ml.eval("ylabel('2st Principal Component');");
@@ -301,6 +305,7 @@ public class Hamamatsu_lib {
 		}
 	}
 
+	//https://jp.mathworks.com/help/nnet/ref/perceptron.html
 	public double[] getPerceptronOR() {
 		double[] y = null;
 		try {
