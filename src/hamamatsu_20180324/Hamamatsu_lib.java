@@ -226,9 +226,11 @@ public class Hamamatsu_lib {
 	public double[][] getPCA() {
 		double[][] var_value = null;
 		double[] explained = null;
+		double[] grp = null;
 		try {
 			ml.putVariableAsync("var_value", var_value);
 			ml.putVariableAsync("explained", explained);
+			ml.putVariableAsync("grp", grp);
 			ml.eval("[coeff,score,latent,~,explained] = pca(zscore(data));");
 			Future<double[][]> futureEval_var_value = ml.getVariableAsync("coeff");
 			var_value = futureEval_var_value.get();
@@ -252,6 +254,17 @@ public class Hamamatsu_lib {
 			ml.eval("zlabel('3st Principal Component');");
 			ml.eval("pause(5);");
 			ml.eval("saveas(gcf,'scatter3_pca.png')");
+			
+			ml.eval("grp = kmeans(zscore(data),6,'Replicates',5);");
+			Future<double[]> futureEval_kmeans = ml.getVariableAsync("grp");
+			grp = futureEval_kmeans.get();
+			System.out.println("grp = "+Arrays.toString(grp));
+			ml.eval("scatter3(score(:,1),score(:,2),score(:,3),10,grp);");
+			ml.eval("xlabel('1st Principal Component');");
+			ml.eval("ylabel('2st Principal Component');");
+			ml.eval("zlabel('3st Principal Component');");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'scatter3_kmeans.png')");
 		} catch (MatlabExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
