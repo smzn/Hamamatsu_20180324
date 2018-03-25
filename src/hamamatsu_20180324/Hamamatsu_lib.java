@@ -356,4 +356,55 @@ public class Hamamatsu_lib {
 
 	}
 
+	public void getSOM() {
+		try {
+			ml.putVariableAsync("data", data);
+			ml.eval("inputs = data';");
+			ml.eval("dimension1 = 10;");
+			ml.eval("dimension2 = 10;");
+			ml.eval("net = selforgmap([dimension1 dimension2]);");
+			ml.eval("[net,tr] = train(net,inputs);");
+			ml.eval("outputs = net(inputs);");
+			ml.eval("view(net)");
+			ml.eval("plotsomtop(net);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsomtop.png')");
+			ml.eval("plotsomnc(net);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsomnc.png')");
+			ml.eval("plotsomnd(net);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsomnd.png')");
+			ml.eval("plotsomplanes(net);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsomplanes.png')");
+			ml.eval("plotsomhits(net,inputs);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsomhits.png')");
+			ml.eval("plotsompos(net,inputs);");
+			ml.eval("pause(5);");
+			ml.eval("saveas(gcf,'plotsompos.png')");
+			
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 }

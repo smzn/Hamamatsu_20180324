@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/mizuno/Downloads/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/mizuno/Downloads/JRI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -7,13 +7,17 @@ public class Hamamatsu_main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		double data[][] = new double[15][5];
+		double dataall[][] = new double[831][19];
 		
 		//MySQL mysql = new MySQL(); //データベース接続時
 		MySQL mysql = new MySQL(1); //csv取り込み
 		//data = mysql.selectData();
 		data = mysql.getCSV("csv/hama05.csv", 15, 6);
+		dataall = mysql.getCSV("csv/hama05all.csv", 831, 19);
 		System.out.println("selectData = "+Arrays.deepToString(data));
+		System.out.println("selectDataall = "+Arrays.deepToString(dataall));
 		Hamamatsu_lib hlib = new Hamamatsu_lib(data);
+		Hamamatsu_lib hliball = new Hamamatsu_lib(dataall);
 		//MySQL ここまで
 		
 		double [] var_value = hlib.getVar();
@@ -31,6 +35,8 @@ public class Hamamatsu_main {
 		hlib.getCluster();
 		double [] perceptron_y = hlib.getPerceptronOR();
 		System.out.println("PerceptronOR = "+Arrays.toString(perceptron_y));
+		hliball.getSOM();
+		
 	}
 
 }
