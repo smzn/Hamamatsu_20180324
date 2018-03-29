@@ -356,6 +356,7 @@ public class Hamamatsu_lib {
 
 	}
 
+	//https://jp.mathworks.com/help/nnet/gs/cluster-data-with-a-self-organizing-map.html
 	public void getSOM() {
 		try {
 			ml.putVariableAsync("data", data);
@@ -404,7 +405,70 @@ public class Hamamatsu_lib {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	//https://jp.mathworks.com/help/nnet/gs/classify-patterns-with-a-neural-network.html
+	public double[][] getNeural(int [][]targets) {
+		double[][] outputs = null;
+		try {
+			ml.putVariableAsync("data", data);
+			ml.putVariableAsync("outputs", outputs);
+			ml.putVariableAsync("targets", targets);
+			ml.eval("inputs = data(:,1:6);");
+			ml.eval("inputs = inputs';");
+			ml.eval("targets = targets';");
+			ml.eval("hiddenLayerSize = 15;");
+			ml.eval("net = patternnet(hiddenLayerSize);");
+			ml.eval("net.divideParam.trainRatio = 70/100;");
+			ml.eval("net.divideParam.valRatio = 15/100;");
+			ml.eval("net.divideParam.testRatio = 15/100;");
+			ml.eval("[net,tr] = train(net,inputs,targets);");
+			ml.eval("nntraintool;");
+			ml.eval("outputs = net(inputs);");
+			//ml.eval("errors = gsubtract(targets,outputs);");
+			//ml.eval("performance = perform(net,targets,outputs)");
+			ml.eval("view(net);");
+			ml.eval("plotperform(tr)");
+			ml.eval("saveas(gcf,'plotperform(tr).png');");
+			ml.eval("pause(5);");
+			ml.eval("plottrainstate(tr)");
+			ml.eval("saveas(gcf,'plottrainstate(tr).png');");
+			ml.eval("pause(5);");
+			ml.eval("plotconfusion(targets,outputs);");
+			ml.eval("saveas(gcf,'plotconfusion(targets,outputs).png');");
+			ml.eval("pause(5);");
+			ml.eval("[c,cm] = confusion(targets,outputs)");
+			ml.eval("fprintf('Percentage Correct Classification   : %f%%\\n', 100*(1-c));");
+			ml.eval("fprintf('Percentage Incorrect Classification : %f%%\\n', 100*c);");
+			ml.eval("plotroc(targets,outputs)");
+			//ml.eval("ploterrhist(errors);");
+			//ml.eval("saveas(gcf,'ploterrhist(errors).png')");
+			//ml.eval("pause(5);");
+			Future<double[][]> futureEval_outputs = ml.getVariableAsync("outputs");
+			outputs = futureEval_outputs.get();
+			
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return outputs;
 
 	}
+
 
 }
