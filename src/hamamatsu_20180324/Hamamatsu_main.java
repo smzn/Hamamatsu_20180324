@@ -28,7 +28,7 @@ public class Hamamatsu_main {
 		//MySQL ここまで
 		
 		double n = 10.0;
-		double [][] transition = hlibtransition.getPower(n);
+		double [][] transition = hlibtransition.getTransition(n);
 		System.out.println("Transition("+ n + ") = "+Arrays.deepToString(transition));
 		
 		int targets[][] = new int[719][4];
