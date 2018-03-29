@@ -9,6 +9,7 @@ public class Hamamatsu_main {
 		double data[][] = new double[15][5];
 		double dataall[][] = new double[831][19];
 		double data_neural[][] = new double[719][7];
+		double data_transition[][] = new double[9][9];
 		
 		//MySQL mysql = new MySQL(); //データベース接続時
 		MySQL mysql = new MySQL(1); //csv取り込み
@@ -16,13 +17,19 @@ public class Hamamatsu_main {
 		data = mysql.getCSV("csv/hama05.csv", 15, 6);
 		dataall = mysql.getCSV("csv/hama05all.csv", 831, 19);
 		data_neural = mysql.getCSV("csv/neural00.csv", 719, 10);
+		data_transition = mysql.getCSV("csv/transition.csv", 9, 9);
 		//System.out.println("selectData = "+Arrays.deepToString(data));
 		//System.out.println("selectDataall = "+Arrays.deepToString(dataall));
 		//System.out.println("selectDataneural = "+Arrays.deepToString(data_neural));
 		Hamamatsu_lib hlib = new Hamamatsu_lib(data);
 		Hamamatsu_lib hliball = new Hamamatsu_lib(dataall);
 		Hamamatsu_lib hlibneural = new Hamamatsu_lib(data_neural);
+		Hamamatsu_lib hlibtransition = new Hamamatsu_lib(data_transition);
 		//MySQL ここまで
+		
+		double n = 10.0;
+		double [][] transition = hlibtransition.getPower(n);
+		System.out.println("Transition("+ n + ") = "+Arrays.deepToString(transition));
 		
 		int targets[][] = new int[719][4];
 		for(int i = 0; i < data_neural.length; i++) {

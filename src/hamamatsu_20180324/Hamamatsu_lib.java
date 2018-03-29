@@ -408,6 +408,7 @@ public class Hamamatsu_lib {
 	}
 	
 	//https://jp.mathworks.com/help/nnet/gs/classify-patterns-with-a-neural-network.html
+	//https://jp.mathworks.com/help/nnet/examples/wine-classification.html
 	public double[][] getNeural(int [][]targets) {
 		double[][] outputs = null;
 		try {
@@ -467,8 +468,39 @@ public class Hamamatsu_lib {
 			e.printStackTrace();
 		}
 		return outputs;
-
 	}
 
+	//https://jp.mathworks.com/help/matlab/ref/mpower.html
+	public double [][] getPower(double n) {
+		double[][] outputs = null;
+		try {
+			ml.putVariableAsync("data", data);
+			ml.putVariableAsync("n", n);
+			ml.eval("c = data ^ n;");
+			Future<double[][]> futureEval_power = ml.getVariableAsync("c");
+			outputs = futureEval_power.get();
+		} catch (MatlabExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MatlabSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CancellationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EngineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return outputs;
+	}
+
+	
 
 }
